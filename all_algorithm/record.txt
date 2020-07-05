@@ -1,0 +1,35 @@
+
+DCN
+    eps: 7000, loss: 0.34183135628700256, acc: 0.8297522068023682, auc: 0.6283726096153259
+    auc: 0.63002
+    mean pctr: 0.17309
+    mean base ctr: 0.17109
+    calibration: 1.01170
+
+DeepFM
+	eps: 7000, loss: 0.44094783067703247, acc: 0.8303655385971069, auc: 0.637944757938385
+	auc: 0.63747
+	mean pctr: 0.16454
+	mean base ctr: 0.17109
+	calibration: 0.96170
+
+FM
+	eps: 7000, loss: 0.4305375814437866, acc: 0.8262444138526917, auc: 0.6051048040390015
+	auc: 0.62304
+	mean pctr: 0.17320
+	mean base ctr: 0.17109
+	calibration: 1.01232
+
+FFM
+	eps: 7000, loss: 0.4163753092288971, acc: 0.8304643034934998, auc: 0.6125621199607849
+	auc: 0.62177
+	mean pctr: 0.17129
+	mean base ctr: 0.17109
+	calibration: 1.00119
+
+LR
+	eps: 7000, loss: 0.39609602093696594, acc: 0.8304575681686401, auc: 0.6113829612731934
+	auc: 0.62095
+	mean pctr: 0.17139
+	mean base ctr: 0.17109
+	calibration: 1.00176
