@@ -110,6 +110,7 @@ def left_loc(self, nums, target):
 
 ### 144. 二叉树的前序遍历
 解析：两种方法：①递归②模拟栈（while True)
+
 [144. 二叉树的前序遍历](https://leetcode.cn/problems/binary-tree-preorder-traversal/submissions/494183488/  144. 二叉树的前序遍历)
 
 ```python
@@ -161,6 +162,7 @@ class Solution(object):
 
 ### 94. 二叉树的中序遍历
 解析：两种方法：①递归②模拟栈（while True)
+
 [94. 二叉树的中序遍历](https://leetcode.cn/problems/binary-tree-inorder-traversal/submissions/494183841/  94. 二叉树的中序遍历)
 
 ```python
@@ -215,6 +217,7 @@ class Solution(object):
 
 ### 0145. 二叉树的后序遍历
 解析：两种方法：①递归②模拟栈（while True)
+
 [0145. 二叉树的后序遍历](https://leetcode.cn/problems/binary-tree-postorder-traversal/submissions/530626594/  0145. 二叉树的后序遍历)
 
 ```python
@@ -240,6 +243,7 @@ class Solution(object):
 
 ### 102. 二叉树的层序遍历
 解析：广度优先搜索deque level
+
 [102. 二叉树的层序遍历](https://leetcode.cn/problems/binary-tree-level-order-traversal/submissions/494184742/  102. 二叉树的层序遍历)
 
 ```python
@@ -279,6 +283,7 @@ class Solution(object):
 
 ### 103. 二叉树的锯齿形层序遍历
 解析：同层序遍历，增加记住奇数和偶数的层ID
+
 [103. 二叉树的锯齿形层序遍历](https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal/submissions/494185650/  103. 二叉树的锯齿形层序遍历)
 
 ```python
@@ -324,6 +329,7 @@ class Solution(object):
 
 ### 104. 二叉树的最大深度
 解析：递归max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1
+
 [104. 二叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-binary-tree/submissions/494186867/  104. 二叉树的最大深度)
 
 ```python
@@ -349,6 +355,7 @@ class Solution(object):
 
 ### 111. 二叉树的最小深度
 解析：递归，但是比最大深度复杂，分别判断当前最小值和左子树、右子树进行比较
+
 [111. 二叉树的最小深度](https://leetcode.cn/problems/minimum-depth-of-binary-tree/submissions/528561851/  111. 二叉树的最小深度)
 
 ```python
@@ -378,6 +385,7 @@ class Solution:
 
 ### 662. 二叉树最大宽度
 解析：因为题目要求空节点也算数，因此对节点进行编号，节点为index的点，左节点是2*index，右节点是2*index + 1计算每层宽度时，用每层节点的最大编号减去最小编号再加 111 即为宽度
+
 [662. 二叉树最大宽度](https://leetcode.cn/problems/maximum-width-of-binary-tree/submissions/495578124/  662. 二叉树最大宽度)
 
 ```python
@@ -431,6 +439,7 @@ class Solution(object):
 
 ### 124. 二叉树中的最大路径和
 解析：配置dfs函数返回每个节点的最大贡献值；中间计算当前包含左右根的新路径 new_path = root.val + leftGain + rightGain
+
 [124. 二叉树中的最大路径和](https://leetcode.cn/problems/binary-tree-maximum-path-sum/submissions/494410856/  124. 二叉树中的最大路径和)
 
 ```python
@@ -465,6 +474,7 @@ class Solution(object):
 
 ### 101. 对称二叉树
 解析：递归校验左子树和又子树，递归self.check(left.left, right.right) and self.check(left.right, right.left)：如果一棵二叉树是对称的，左子树和右子树的外侧节点的节点值相等，并且其左子树和右子树的内侧节点的节点值也相等
+
 [101. 对称二叉树](https://leetcode.cn/problems/symmetric-tree/submissions/494405545/  101. 对称二叉树)
 
 ```python
@@ -499,6 +509,7 @@ class Solution(object):
 
 ### 112. 路径总和
 解析：返回结果是是否满足这样条件的路径，True or  False
+
 [112. 路径总和](https://leetcode.cn/problems/path-sum/submissions/494398025/  112. 路径总和)
 
 ```python
@@ -529,6 +540,7 @@ class Solution(object):
 
 ### 113. 路径总和 II
 解析：返回结果是所有满足这样条件的路径，具体的路径；这道题有点像回溯，path中先把当前节点加入，递归调用当前节点的左边和右边子树；递归完成后再pop掉当前节点。递归过程中若满足条件，则结果集合中加入path[:]（浅拷贝）
+
 [113. 路径总和 II](https://leetcode.cn/problems/path-sum-ii/submissions/530896995/  113. 路径总和 II)
 
 ```python
@@ -564,6 +576,7 @@ class Solution:
 
 ### 236. 二叉树的最近公共祖先
 解析：自下而上，找到左右节点为父节点的子树均满足条件的（包含当前p或者q)
+
 [236. 二叉树的最近公共祖先](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/submissions/494186470/  236. 二叉树的最近公共祖先)
 
 ```python
@@ -601,6 +614,7 @@ class Solution(object):
 
 ### 0199. 二叉树的右视图
 解析：使用广度优先搜索对二叉树进行层次遍历。在遍历每层节点的时候，只需要将最后一个节点加入结果数组即可
+
 [0199. 二叉树的右视图](https://leetcode.cn/problems/binary-tree-right-side-view/submissions/530900908/  0199. 二叉树的右视图)
 
 ```python
@@ -640,6 +654,7 @@ class Solution:
 
 ### 226. 翻转二叉树
 解析：自下而上，翻转；root.left = right  root.right = left
+
 [226. 翻转二叉树](https://leetcode.cn/problems/invert-binary-tree/submissions/494411944/  226. 翻转二叉树)
 
 ```python
@@ -669,6 +684,7 @@ class Solution(object):
 
 ### 958. 二叉树的完全性检验
 解析：自上而下，每次加入一层，如果在遍历过程中在遇到第一个空节点之后，又出现了非空节点，则该二叉树不是完全二叉树。维护一个布尔变量 is_empty 用于标记是否遇见了空节点。
+
 [958. 二叉树的完全性检验](https://leetcode.cn/problems/check-completeness-of-a-binary-tree/submissions/530902587/  958. 二叉树的完全性检验)
 
 ```python
@@ -709,6 +725,7 @@ class Solution(object):
 
 ### 572. 另一棵树的子树
 解析：如果找到val相等的节点，就同步判断这个点的子树是否相等
+
 [572. 另一棵树的子树](https://leetcode.cn/problems/subtree-of-another-tree/submissions/495582974/  572. 另一棵树的子树)
 
 ```python
@@ -745,6 +762,7 @@ class Solution(object):
 
 ### 100. 相同的树
 解析：若两数相同，则root节点相同&节点值也相等&递归结果也相等
+
 [100. 相同的树](https://leetcode.cn/problems/same-tree/submissions/528677991/  100. 相同的树)
 
 ```python
@@ -769,6 +787,7 @@ class Solution:
 
 ### 111. 二叉树的最小深度
 解析：先判断是否为空树、只有一个节点的树
+
 [111. 二叉树的最小深度](https://leetcode.cn/problems/minimum-depth-of-binary-tree/submissions/528561851/  111. 二叉树的最小深度)
 
 ```python
@@ -798,6 +817,7 @@ class Solution:
 
 ### LCR 151. 彩灯装饰记录 III
 解析：同103题，增加奇数和偶数行判定
+
 [LCR 151. 彩灯装饰记录 III](https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof/submissions/529046357/  LCR 151. 彩灯装饰记录 III)
 
 ```python
@@ -837,6 +857,7 @@ class Solution:
 
 ### 207.课程表
 解析：方法1：广度优先搜索，从入度为0的节点出发，【从低到高】；方法2：深度优先搜索，从出度为0的节点出发，【从高到低，最后将结果翻转】
+
 [207.课程表](https://leetcode.cn/problems/course-schedule/submissions/529043299/  207.课程表)
 
 ```python
@@ -902,6 +923,7 @@ class Solution:
 
 ### 210. 课程表 II
 解析：广度优先搜索，从入度为0的节点出发，【从低到高】，深度优先搜索也可以，就是麻烦一点。
+
 [210. 课程表 II](https://leetcode.cn/problems/course-schedule-ii/submissions/529043183/  210. 课程表 II)
 
 ```python
@@ -969,6 +991,7 @@ class Solution:
 
 ### 200. 岛屿数量
 解析：深度优先搜索和广度优先搜索均可以
+
 [200. 岛屿数量](https://leetcode.cn/problems/number-of-islands/submissions/494654775/  200. 岛屿数量)
 
 ```python
@@ -1013,10 +1036,11 @@ class Solution(object):
         return count
 ```
 
-​    
+ # H1动态规划   
 
 ### 322. 零钱兑换
 解析：广度优先搜索（最短路径和的问题） 和 动态规划【dp[i]表示凑成金额i最少的硬币数量】。时间复杂度O(amount*size), 空间复杂度O(amount)
+
 [322. 零钱兑换](https://leetcode.cn/problems/coin-change/submissions/498157075/  322. 零钱兑换)
 
 ```python
@@ -1077,6 +1101,7 @@ class Solution(object):
 
 ### 518. 零钱兑换 II
 解析：定义状态 dp[i] 表示为：凑成总金额为 i 的方案总数。# # 状态转移方程：dp[i] = 不使用当前coin的方案dp[i]+使用当前coin的方案dp[i - coin]
+
 [518. 零钱兑换 II](https://leetcode.cn/problems/coin-change-ii/submissions/531704251/  518. 零钱兑换 II)
 
 ```python
@@ -1145,6 +1170,7 @@ class Solution(object):
 
 ### 70. 爬楼梯
 解析：等同斐波那契；题目延伸到一次最多爬k个
+
 [70. 爬楼梯](https://leetcode.cn/problems/climbing-stairs/submissions/499266429/  70. 爬楼梯)
 
 ```python
@@ -1197,6 +1223,7 @@ class Solution(object):
 
 ### 509. 斐波那契数
 解析：自下而上；状态压缩
+
 [509. 斐波那契数](https://leetcode.cn/problems/fibonacci-number/submissions/496640291/  509. 斐波那契数)
 
 ```python
@@ -1255,6 +1282,7 @@ class Solution(object):
 
 ### 121.买卖股票的最佳时机
 解析：注意是只能买一次，记录下当前看到的最小值和当前如果卖出的话，利润的最大值。
+
 [121.买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/submissions/498156003/  121.买卖股票的最佳时机)
 
 ```python
@@ -1280,6 +1308,7 @@ class Solution(object):
 ### 122.买卖股票的最佳时机 II
 解析：可以买卖多次，方法1：动态规划（dp[i][0]:第i天手上没有股票的收益，dp[i][1]：第i天手上有1只股票的收益
 ）；方法2：贪心（maxres = maxres + prices[i] - prices[i-1]）
+
 [122.买卖股票的最佳时机 II](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/submissions/141701036/  122.买卖股票的最佳时机 II)
 
 ```python
@@ -1300,6 +1329,7 @@ class Solution(object):
 
 ### 123.买卖股票的最佳时机 III
 解析：最多可以进行两次买卖.确定当前天数下，方法1：一共有几种状态（4种）buy1, sell1, buy2, sell2, 然后确定已知i-1天的状态下，当前是如何通过状态方程得到第i天的状态的；方法2：复用最多交易K次的代码（dp[n][k][0]:第n天，至今最多进行了k次交易，当前手上没有股票的收益，dp[n][k][1]:第n天，至今最多进行了k次交易，当前手上有股票的收益）
+
 [123.买卖股票的最佳时机 III](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iii/submissions/520101141/  123.买卖股票的最佳时机 III)
 
 ```python
@@ -1321,6 +1351,7 @@ class Solution:
 
 ### 188. 买卖股票的最佳时机 IV
 解析：最多可以进行K次买卖.确定解题框架!!!最终返回 dp[n][k][0]:第n天，至今最多进行了k次交易，当前手上没有股票的收益
+
 [188. 买卖股票的最佳时机 IV](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/submissions/520110019/  188. 买卖股票的最佳时机 IV)
 
 ```python
@@ -1350,6 +1381,7 @@ class Solution:
 
 ### 309. 买卖股票的最佳时机含冷冻期
 解析：注意循环是for i in range(len(prices) + 1)。有一天冷冻期，状态转移方程当天持有股票的最大收益，这个要修改一下，依赖于i-2，然后要注意处理i=1和i=2的情况
+
 [309. 买卖股票的最佳时机含冷冻期](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/submissions/520118258/  309. 买卖股票的最佳时机含冷冻期)
 
 ```python
@@ -1376,6 +1408,7 @@ class Solution:
 
 ### 714. 买卖股票的最佳时机含手续费
 解析：注意循环是for i in range(len(prices) + 1)。从每次购买股票的收益中减去这个手续费，注意初始化i=0时，dp[i][1] = -prices[0] - fee
+
 [714. 买卖股票的最佳时机含手续费](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/submissions/520119440/  714. 买卖股票的最佳时机含手续费)
 
 ```python
