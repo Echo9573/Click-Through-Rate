@@ -59,7 +59,7 @@ class Solution:
                     right -= 1
         return res
 
-    def moveZeroes(self, nums):  # 移动0 ： 将所有的0移动到数组的末尾，保持非零元素的相对顺序
+    def moveZeroes(self, nums):  # 283移动0 ： 将所有的0移动到数组的末尾，保持非零元素的相对顺序
         slow, fast = 0, 0
         while fast < len(nums):
             if nums[fast] != 0:
@@ -81,20 +81,18 @@ class Solution:
         # 双指针 + 快排思想：将序列分成——比基准数小，等于基准数，大于基准数
         left, mid, right = 0, 0, len(nums) - 1
         while mid <= right:
-            # print(mid, left, right, nums)
-            if mid < left:  # 注意要加这个判断，否则，最后mid会到最左边了
-                mid += 1
-            elif nums[mid] == 0:
+            if nums[mid] == 0:
                 nums[mid], nums[left] = nums[left], nums[mid]
                 left += 1
+                mid += 1
             elif nums[mid] == 2:
                 nums[mid], nums[right] = nums[right], nums[mid]
                 right -= 1
             else:
                 mid += 1
 
-    def removeDuplicates(self, nums):  # 删除有序数组中的重复项
-        slow, fast = 0, 1
+    def removeDuplicates(self, nums):  # 26删除有序数组中的重复项
+        slow, fast = 0, 0
         while fast < len(nums):
             if nums[slow] != nums[fast]:
                 slow += 1
@@ -102,19 +100,73 @@ class Solution:
             fast += 1
         return slow + 1
 
-    def subarraySum(self, nums, k):  # 560和为 K 的子数组的个数
-        # 前缀和+哈希表
-        # pre[i]为[0, i]中所有数的和，那么[j, i]里所有数的和为k
-        # 那么pre[j - 1] == pre[i] - k
-        cnt = 0
-        presum = 0
-        sum_dict = {0: 1}
-        for i in range(len(nums)):
-            presum += nums[i]
-            if presum - k in sum_dict:
-                cnt += sum_dict[presum - k]
-            sum_dict[presum] = sum_dict.get(presum, 0) + 1
-        return cnt
+
+    def merge(self, nums1, m, nums2, n):  # 88合并两个有序数组nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+        i, j = m - 1, n - 1
+        index = m + n - 1
+        while i >= 0 and j >= 0:
+            if nums1[i] >= nums2[j]:
+                nums1[index] = nums1[i]
+                i -= 1
+            else:
+                nums1[index] = nums2[j]
+                j -= 1
+            index -= 1
+        if j >= 0:
+            nums1[: j + 1] = nums2[:j + 1]
+        return nums1
+
+    def maxArea(self, height):  # 11盛最多水的容器
+        left, right = 0, len(height) - 1
+        area = 0
+        while left < right:
+            temp = min(height[left], height[right]) * (right - left)
+            area = max(temp, area)
+            if height[left] < height[right]:
+                left += 1
+            else:
+                right -= 1
+        return area
+
+
+     def triangleNumber(self, nums):  # 有效三角形的个数
+         nums.sort()
+         res = 0
+         for i in range(2, len(nums)):
+             left, right = 0, i - 1
+             while left < right:
+                 if nums[left] + nums[right] <= nums[i]:
+                     left += 1
+                 else:
+                     res += (right - left)
+                     right -= 1
+         return res
+
+    def reverse(self, chars, left, right):  # 必须增加这个翻转函数
+        if left <= right:
+            chars[left], chars[right] = chars[right], chars[left]
+            left += 1
+            right -= 1
+    def compress(self, chars: List[str]) -> int:  # 443压缩字符串
+        # 有三个指针，分别标记，当前写的位置，当前读的新字符的起点，读指针
+        write, start, read = 0, 0, 0
+        n = len(chars)
+        for read in range(n):
+            # 有重复的一直在读，并处理
+            if read == n - 1 or chars[read] != chars[read + 1]:
+                chars[write] = chars[read]
+                write += 1
+                ls = read - start + 1
+                if ls > 1:  # 这里需要有这样一个判断
+                    left = write
+                    while ls > 0:
+                        chars[write] = str(ls % 10)
+                        write += 1
+                        ls = ls // 10
+                    self.reverse(chars, left, write - 1)
+                start = read + 1  # 这个不能在ls > 1的逻辑里面
+            # print(chars)
+        return write
 
 
 
