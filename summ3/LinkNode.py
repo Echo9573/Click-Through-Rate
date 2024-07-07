@@ -15,10 +15,12 @@ class Solution(object):
         dummy_node.next = head
         cur = dummy_node
         while cur.next and cur.next.next:
-            node1, node2 = cur.next, cur.next.next
+            node1 = cur.next
+            node2 = cur.next.next
+            temp = node2.next
             cur.next = node2
-            node1.next = node2.next
             node2.next = node1
+            node1.next = temp
             cur = node1
         return dummy_node.next
 
@@ -120,7 +122,7 @@ class Solution(object):
     
     def reverseKGroup(self, head, k):  # k个一组翻转链表
         def reverseList_between(a, b):  # 翻转链表(a, b)之间
-            pre = ListNode(-1)
+            pre = None
             cur = a
             while cur != b:
                 temp = cur.next
@@ -202,7 +204,7 @@ class Solution(object):
     def sortList(self, head):   # 链表的归并排序
         if not head or not head.next:
             return head
-        slow, fast = head, head.next # fast是head.next
+        slow, fast = head, head.next # 注意这里fast是head.next
         # 二分法找中间节点，取划分链表
         while fast and fast.next:
             fast = fast.next.next
@@ -286,15 +288,14 @@ class Solution(object):
         # 快慢指针
         dummy_node = ListNode(-1)
         dummy_node.next = head
-        fast = head
-        slow = dummy_node
+        fast, slow = head, head
         while cnt > 0:
             fast = fast.next
             cnt -= 1
         while fast:
             fast = fast.next
             slow = slow.next
-        return slow.next
+        return slow
 
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:  # 删除链表倒数第K个节点
         # 方法2：
@@ -317,7 +318,7 @@ class Solution(object):
         # slow.next = slow.next.next
         # return dummy_node.next # 因为有可能返回空链表，所以必须是从空的哑node开始
 
-    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':  # 138. 随机链表的复制
         if not head:
             return None
         # 使用字典记录原节点和新节点
@@ -365,3 +366,20 @@ class Solution(object):
         L2 = self.reverseList(l2)
         L1plusL2 = self.addTwoNumbers(L1, L2)
         return self.reverseList(L1plusL2)
+
+    def rotateRight(self, head, k):  # 61. 旋转链表
+        if k == 0 or (not head):
+            return head
+        len = 1
+        cur = head
+        while cur.next:
+            cur = cur.next
+            len += 1
+        cur.next = head
+        m = len - (k % len)
+        while m:
+            cur = cur.next
+            m -= 1
+        new_head = cur.next
+        cur.next = None
+        return new_head
