@@ -10,6 +10,18 @@ class DoublyListNode:
         self.next = next
 
 class Solution(object):
+    def swapPairs(self, head): # 24. 两两交换链表中的节点
+        dummy_node = ListNode(-1)
+        dummy_node.next = head
+        cur = dummy_node
+        while cur.next and cur.next.next:
+            node1, node2 = cur.next, cur.next.next
+            cur.next = node2
+            node1.next = node2.next
+            node2.next = node1
+            cur = node1
+        return dummy_node.next
+
     def deleteDuplicates(self, head):  # 删除已排序的链表中的重复元素（多余的删除）
         if not head:
             return None
@@ -54,8 +66,47 @@ class Solution(object):
         head.next = None
         return last
 
-    def reverseDoubleList(self, head):  # 翻转链表
-        # 方法1：
+    def reverseBeween(self, head, left, right):  # 92.反转链表 II
+        # 方法1：非递归
+        if not head:
+            return None
+        dummy_node = ListNode(0)
+        dummy_node.next = head
+        cur_0 = dummy_node
+        index = 1
+        while cur_0.next and index < left:
+            cur_0 = cur_0.next
+            index += 1
+        prev = cur_0
+        cur = prev.next
+        while cur and index <= right:
+            temp = cur.next
+            cur.next = prev
+            prev = cur
+            cur = temp
+            index += 1
+        cur_0.next.next = cur
+        cur_0.next = prev
+        return dummy_node.next
+
+    def reverseBeween_way2(self, head, left, right):
+        def reverseTopk(head, n):
+            if n == 1:
+                return head
+            last = reverseTopk(head.next, n - 1)
+            succ = head.next.next
+            head.next.next = head
+            head.next = succ
+            return last
+        m, n = left, right
+        if n == 1:
+            return head
+        if m == 1:
+            return reverseTopk(head, n)
+        head.next = self.reverseBetween(head.next, m - 1, n - 1)
+        return head
+
+    def reverseDoubleList(self, head):  # 翻转双向链表
         pre = None
         cur = head
         while cur:
@@ -66,19 +117,20 @@ class Solution(object):
             cur = temp
         return pre
 
-    def reverseList_between(self, a, b):  # 翻转链表(a, b)之间
-        pre = ListNode(-1)
-        cur = a
-        while cur != b:
-            temp = cur.next
-            cur.next = pre
-            pre = cur
-            cur = temp
-        return pre
+    
     def reverseKGroup(self, head, k):  # k个一组翻转链表
+        def reverseList_between(a, b):  # 翻转链表(a, b)之间
+            pre = ListNode(-1)
+            cur = a
+            while cur != b:
+                temp = cur.next
+                cur.next = pre
+                pre = cur
+                cur = temp
+            return pre
+            
         if not head:
             return None
-
         a = head
         b = head
         for i in range(k):  # 找到和a相距k的b[a, b)
@@ -89,6 +141,28 @@ class Solution(object):
         new_head = self.reverseList_between(a, b)
         a.next = self.reverseKGroup(b, k)
         return new_head
+
+    def oddEvenList(self, head): # 奇偶链表
+        if not head or (not head.next) or (not head.next.next):
+            return head
+        evenhead = head.next
+        odd, even = head, evenhead
+        isOdd = True
+        cur = head.next.next
+        while cur:
+            if isOdd:
+                odd.next = cur
+                odd = cur
+            else:
+                even.next = cur
+                even = cur
+            isOdd = not isOdd
+            cur = cur.next
+        odd.next = evenhead
+        # 记得这个尾指针一定要加上，要不然有问题
+        even.next = None
+        return head
+
 
     def isPalindrome(self, head):  # 回文链表（快慢指针法）
         # way 1：快慢指针法
@@ -222,6 +296,26 @@ class Solution(object):
             fast = fast.next
             slow = slow.next
         return slow.next
+
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        if not head:
+            return None
+        # 使用字典记录原节点和新节点
+        nodedict = {}
+        # 先复制链表中对应的节点
+        cur = head
+        while cur:
+            nodedict[cur] = Node(cur.val, None, None)
+            cur = cur.next
+        cur = head
+        # 再链接链表中节点指向性关系
+        while cur:
+            if cur.next:
+                nodedict[cur].next = nodedict[cur.next]
+            if cur.random:
+                nodedict[cur].random = nodedict[cur.random]
+            cur = cur.next
+        return nodedict[head]
 
     def addTwoNumbers(self, l1, l2):  # 两数相加 （数字是逆序存放的例如：[2, 4, 3]-> 342
         dummy_node = ListNode(0)

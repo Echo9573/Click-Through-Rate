@@ -64,7 +64,47 @@ class Solution(object):
             odd = not odd
         return res
 
-    def widthOfBinaryTree(self, root):  # 二叉树的最大宽度
+    def decorateRecord(self, root):
+        # 层序遍历，使用变量记住当前的行数是奇数还是偶数
+        if not root:
+            return []
+        queue = [root]
+        res = []
+        is_odd = True
+        while queue:
+            cur_level = []
+            level_size = len(queue)
+            for _ in range(level_size):
+                curr = queue.pop(0)
+                cur_level.append(curr.val)
+                if curr.left:
+                    queue.append(curr.left)
+                if curr.right:
+                    queue.append(curr.right)
+            if is_odd:
+                res.append(cur_level)
+            else:
+                res.append(cur_level[::-1])
+            is_odd = not is_odd
+        return res
+
+    def verifyTreeOrder(self, postorder):  # 剑指33.二叉搜索树后序遍历序列验证
+        def verify(left, right):
+            if left >= right:
+                return True
+            index = left
+            while postorder[index] < postorder[right]:
+                index += 1
+            mid = index
+            while postorder[index] > postorder[right]:
+                index += 1
+            return index == right and verify(left, mid - 1) and verify(mid, right - 1)
+
+        if len(postorder) <= 2:
+            return True
+        return verify(0, len(postorder) - 1)
+
+    def widthOfBinaryTree(self, root):  # 662 二叉树的最大宽度
         # 空节点也算数
         if not root:
             return 0
@@ -81,7 +121,7 @@ class Solution(object):
                     queue.append([cur_node.right, 2 * index + 2])
         return res
 
-    def rightSideView(self, root):
+    def rightSideView(self, root):  # 0199. 二叉树的右视图
         # 层序遍历
         if not root:
             return []
@@ -100,7 +140,8 @@ class Solution(object):
             res.append(level[-1])
         return res
 
-    def isCompleteTree(self, root):  # 二叉树的完全性检验
+    def isCompleteTree(self, root):  # 958. 二叉树的完全性检验
+        # 完全二叉树中，除了最后一层外，所有层都被完全填满
         # 层序遍历
         if not root:
             return False
@@ -121,7 +162,7 @@ class Solution(object):
                     queue.append(cur.right)
         return True
 
-    def buildTree(self, preorder, inorder):
+    def buildTree(self, preorder, inorder):  # 105. 从前序与中序遍历序列构造二叉树
         if not preorder or not inorder:
             return None
         root_value = preorder[0]
@@ -131,7 +172,7 @@ class Solution(object):
         root.right = self.buildTree(preorder[1 + root_index:], inorder[root_index + 1:])
         return root
 
-    def buildTree2(self, inorder, postorder):
+    def buildTree2(self, inorder, postorder):  # 106. 从中序与后序遍历序列构造二叉树
         if not postorder or not inorder:
             return None
         root_value = postorder[-1]
@@ -156,7 +197,7 @@ class Solution(object):
             return self.minDepth(root.left) + 1
         return min(self.minDepth(root.left), self.minDepth(root.right)) + 1
 
-    def diameterOfBinaryTree(self, root):  # 二叉树最大直径（二叉树中任意两个节点路径长度中的最大值）
+    def diameterOfBinaryTree(self, root):  # 543 二叉树最大直径（二叉树中任意两个节点路径长度中的最大值）
         def dfs(root):
             if not root:
                 return 0
@@ -172,7 +213,7 @@ class Solution(object):
         return self.maxx
 
 
-    def maxPathSum(self, root):  # 最大路径和
+    def maxPathSum(self, root):  # 124.最大路径和
         def dfs(root):
             if not root:
                 return 0
@@ -186,7 +227,7 @@ class Solution(object):
         dfs(root)
         return self.max_path
 
-    def hasPathSum(self, root, targetSum):
+    def hasPathSum(self, root, targetSum): # 112. 路径总和
         if not root:
             return False  # return False
         if not root.left and not root.right:  # 叶子结点
@@ -195,7 +236,7 @@ class Solution(object):
         right_res = self.hasPathSum(root.right, targetSum - root.val)
         return left_res or right_res
 
-    def PathSum(self, root, targetSum):  # 返回路径
+    def PathSum(self, root, targetSum):  # 113. 路径总和 II 返回路径
         res = []
         path = []
         def dfs(root, targetSum):
@@ -211,7 +252,7 @@ class Solution(object):
         dfs(root, targetSum)
         return res
 
-    def lowestCommonAncestor(self, root, p, q):
+    def lowestCommonAncestor(self, root, p, q):  # 236. 二叉树的最近公共祖先
         # ***
         # 最近公共祖先
         if root == p or root == q:
@@ -227,16 +268,28 @@ class Solution(object):
                 return node_left
         return None
 
-    def invertTree(self, root):  # 翻转二叉树
-         if not root:
-             return None
-         left = self.invertTree(root.left)
-         right = self.invertTree(root.right)
-         root.left = right
-         root.right = left
-         return root
+    def invertTree(self, root):  # 226. 翻转二叉树
+        if not root:
+            return None
+        left = self.invertTree(root.left)
+        right = self.invertTree(root.right)
+        root.left = right
+        root.right = left
+        return root
+        # # 非递归方法（队列）
+        # if not root:
+        #     return root
+        # queue = [root]
+        # while queue:
+        #     cur = queue.pop(0)
+        #     cur.left, cur.right = cur.right, cur.left
+        #     if cur.left:
+        #         queue.append(cur.left)
+        #     if cur.right:
+        #         queue.append(cur.right)
+        # return root
 
-    def isduicheng(self, root): # 对称二叉树
+    def isduicheng(self, root): # 101. 对称二叉树
         def check(left, right):
             if not left and not right:
                 return True
@@ -249,7 +302,7 @@ class Solution(object):
         return check(root.left, root.right)
 
 
-    def isSameTree(self, p, q):  # 想同的树
+    def isSameTree(self, p, q):  # 100. 相同的树
         if not p and not q:
             return True
         if not p or not q:
@@ -257,7 +310,7 @@ class Solution(object):
         return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
 
 
-    def isSubTree(self, root, subRoot):  # 另一个树的子树
+    def isSubTree(self, root, subRoot):  # 572. 另一棵树的子树
         def isSameTree(p, q):
             if not p and not q:
                 return True
@@ -273,7 +326,8 @@ class Solution(object):
             return checkSubtree(root.left, subRoot) or checkSubtree(root.right, subRoot)
         return checkSubtree(root, subRoot)
 
-    # 前序遍历序列化 和 反序列化
+    # 297.二叉树的序列化与反序列化
+    # way1: 前序遍历序列化 和 反序列化
     def pre_serialize(self, root):
         if not root:
             return "NULL"
@@ -290,7 +344,7 @@ class Solution(object):
         datalist = data.split(",")
         return helper(datalist)
 
-    # 后序遍历序列化 和 反序列化
+    # way2: 后序遍历序列化 和 反序列化
     def post_serialize(self, root):
         if not root:
             return "NULL"
@@ -308,7 +362,7 @@ class Solution(object):
         datalist = data.split(",")
         return helper(datalist)
 
-    def flatten(self, root):  # 二叉树展开成链表
+    def flatten(self, root):  # 114. 二叉树展开为链表
         if not root:
             return None
         self.flatten(root.left)
@@ -321,7 +375,7 @@ class Solution(object):
         root.right = old_right
         return root
 
-    def isValidBST(self, root):  # 验证二叉搜索树
+    def isValidBST(self, root):  # 98. 验证二叉搜索树
         def preorder(root, min_v, max_v): # 前序遍历
             if not root:
                 return True
@@ -331,7 +385,7 @@ class Solution(object):
 
         return preorder(root, float('-inf'), float('inf'))
 
-    def deleteNode(self, root, key):  # 删除二叉搜索树中的节点key
+    def deleteNode(self, root, key):  # 450. 删除二叉搜索树中的节点
         if not root:
             return None
         if root.val > key:
@@ -369,7 +423,7 @@ class Solution(object):
         dfs(root)
         return self.res
 
-    def findsmallestKNode(self, root, k):  # 二叉搜索树中第K小的数
+    def findsmallestKNode(self, root, k):  # 230. 二叉搜索树中第K小的元素
         # 二叉树中序遍历（左，中，右）
         def dfs(root):
             if not root:
@@ -388,7 +442,7 @@ class Solution(object):
         dfs(root)
         return self.res
 
-    def treeToDoubleList(self, root):  # 二叉搜索树转化为双向链表
+    def treeToDoubleList(self, root):  # 426. 将二叉搜索树转化为排序的双向链表
         # 二叉树中序遍历（左中右）
         def dfs(root):
             if not root:
@@ -427,7 +481,7 @@ class Solution(object):
         height(root)
         return self.balanced
 
-    def longestIncreasingPath(self, matrix):  # 矩阵中最长的递增路径
+    def longestIncreasingPath(self, matrix):  # 0329. 矩阵中的最长递增路径
         def dfs(row, col):
             if cache[row][col] != 0:
                 return cache[row][col]
@@ -486,7 +540,7 @@ class Solution(object):
                     anx = max(anx, dfs(grid, i, j))
         return anx
 
-    def sumNumbers(self, root):  # 根节点到叶子结点的数字之和
+    def sumNumbers(self, root):  # 129. 求根节点到叶节点数字之和
         def dfs(root, pre_total):
             if not root:
                 return 0

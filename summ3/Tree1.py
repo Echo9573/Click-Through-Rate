@@ -242,14 +242,26 @@ class Solution(object):
         else:
             return node_left
 
-    def invertTree(self, root):  # 翻转二叉树
-         if not root:
-             return None
-         left = self.invertTree(root.left)
-         right = self.invertTree(root.right)
-         root.left = right
-         root.right = left
-         return root
+    def invertTree(self, root):  # 226. 翻转二叉树
+        if not root:
+            return None
+        left = self.invertTree(root.left)
+        right = self.invertTree(root.right)
+        root.left = right
+        root.right = left
+        return root
+        # # 非递归方法（队列）
+        # if not root:
+        #     return root
+        # queue = [root]
+        # while queue:
+        #     cur = queue.pop(0)
+        #     cur.left, cur.right = cur.right, cur.left
+        #     if cur.left:
+        #         queue.append(cur.left)
+        #     if cur.right:
+        #         queue.append(cur.right)
+        # return root
 
     def isduicheng(self, root): # 对称二叉树
         def check(left, right):
