@@ -370,7 +370,7 @@ class Solution(object):
         if not root:
             return None
         if root.val > key:
-            root.left = self.deleteNode(root.left, key)
+            root.left = self.deleteNode(root.left, key) # 这里需要返回-root->left
         elif root.val < key:
             root.right = self.deleteNode(root.right, key)
         else:
@@ -443,22 +443,26 @@ class Solution(object):
 
     
 
-    def longestIncreasingPath(self, matrix):  # 矩阵中最长的递增路径
+    def longestIncreasingPath(self, matrix):  # 329. 矩阵中的最长递增路径
+        # 方法1：记忆化深度优先搜索
+        if not matrix:
+            return 0
         def dfs(row, col):
-            if cache[row][col] != 0:
+            # cache[i][j]表示从矩阵中位置(i, j)开始的最长递增路径的长度
+            if cache[row][col] != 0: # 当前已经计算过，直接返回缓存结果
                 return cache[row][col]
             max_len = 1
             all_direct = [(-1, 0), (1, 0), (0, 1), (0, -1)]
             for x, y in all_direct:
                 new_row, new_col = row + x, col + y
                 if 0 <= new_row < m and 0 <= new_col < n and matrix[new_row][new_col] > matrix[row][col]:
-                    max_len = max(max_len, dfs(new_row, new_col)) + 1
+                    max_len = max(max_len, dfs(new_row, new_col) + 1)
             cache[row][col] = max_len
             return max_len
 
         result = 0
         m, n = len(matrix), len(matrix[0])
-        cache = [[0 for _ in range(n)] for _ in range(m)]
+        cache = [[0 for _ in range(n)] for _ in range(m)]  # 增加缓存模块，防止重复计算
         for i in range(m):
             for j in range(n):
                 result = max(result, dfs(i, j))
