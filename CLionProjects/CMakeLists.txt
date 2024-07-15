@@ -5,4 +5,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(CLionProjects main.cpp
         ListNode.h
-        ListNode.cpp)
+        ListNode.cpp
+        TreeNode.h
+        TreeNode.cpp)

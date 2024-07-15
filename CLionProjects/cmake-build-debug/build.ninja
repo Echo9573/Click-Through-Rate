@@ -61,6 +61,12 @@ build CMakeFiles/CLionProjects.dir/ListNode.cpp.o: CXX_COMPILER__CLionProjects_u
   OBJECT_DIR = CMakeFiles/CLionProjects.dir
   OBJECT_FILE_DIR = CMakeFiles/CLionProjects.dir
 
+build CMakeFiles/CLionProjects.dir/TreeNode.cpp.o: CXX_COMPILER__CLionProjects_unscanned_Debug /Users/zhuwenjing/int/Click-Through-Rate/CLionProjects/TreeNode.cpp || cmake_object_order_depends_target_CLionProjects
+  DEP_FILE = CMakeFiles/CLionProjects.dir/TreeNode.cpp.o.d
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.3 -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/CLionProjects.dir
+  OBJECT_FILE_DIR = CMakeFiles/CLionProjects.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target CLionProjects
@@ -69,7 +75,7 @@ build CMakeFiles/CLionProjects.dir/ListNode.cpp.o: CXX_COMPILER__CLionProjects_u
 #############################################
 # Link the executable CLionProjects
 
-build CLionProjects: CXX_EXECUTABLE_LINKER__CLionProjects_Debug CMakeFiles/CLionProjects.dir/main.cpp.o CMakeFiles/CLionProjects.dir/ListNode.cpp.o
+build CLionProjects: CXX_EXECUTABLE_LINKER__CLionProjects_Debug CMakeFiles/CLionProjects.dir/main.cpp.o CMakeFiles/CLionProjects.dir/ListNode.cpp.o CMakeFiles/CLionProjects.dir/TreeNode.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.3
   OBJECT_DIR = CMakeFiles/CLionProjects.dir
   POST_BUILD = :

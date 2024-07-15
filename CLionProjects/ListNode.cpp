@@ -2,17 +2,17 @@
 #include <unordered_map>
 #include <vector>
 #include "ListNode.h"
-ListNode* Solution::reveseList(ListNode* head) {
+ListNode* ListNodeSolution::reveseList(ListNode* head) {
     if (!head || !head->next) {
         return head;
     }
-    ListNode* last = Solution::reveseList(head->next);
+    ListNode* last = ListNodeSolution::reveseList(head->next);
     head->next->next = head;
     head->next = NULL;
     return last;
 }
 
-ListNode* Solution::reveseList2(ListNode* head) {
+ListNode* ListNodeSolution::reveseList2(ListNode* head) {
     ListNode *prev = NULL;
     ListNode *cur = head;
     while (cur){
@@ -24,7 +24,7 @@ ListNode* Solution::reveseList2(ListNode* head) {
     return prev;
 }
 
-ListNode* Solution::reverseBetween(ListNode* head, int left, int right) {
+ListNode* ListNodeSolution::reverseBetween(ListNode* head, int left, int right) {
     ListNode *dummy_node = new ListNode();
     dummy_node->next = head;
     ListNode *cur = dummy_node;
@@ -47,7 +47,7 @@ ListNode* Solution::reverseBetween(ListNode* head, int left, int right) {
     return dummy_node->next;
 }
 
-ListNode* Solution::reverseTopK(ListNode* head, int k) {
+ListNode* ListNodeSolution::reverseTopK(ListNode* head, int k) {
     if (k == 1 || !head) {
         return head;
     }
@@ -58,7 +58,7 @@ ListNode* Solution::reverseTopK(ListNode* head, int k) {
     return last;
 }
 
-ListNode* Solution::reverseBetween2(ListNode* head, int left, int right) {
+ListNode* ListNodeSolution::reverseBetween2(ListNode* head, int left, int right) {
     int m = left;
     int n = right;
     if (n == 1) {
@@ -71,7 +71,7 @@ ListNode* Solution::reverseBetween2(ListNode* head, int left, int right) {
     return head;
 }
 
-ListNode* Solution::swapPairs(ListNode* head) {
+ListNode* ListNodeSolution::swapPairs(ListNode* head) {
     if (!head or !head->next) {
         return head;
     }
@@ -90,7 +90,7 @@ ListNode* Solution::swapPairs(ListNode* head) {
     return dummy_node->next;
 }
 
-ListNode* Solution::deleteDuplicates(ListNode* head) {
+ListNode* ListNodeSolution::deleteDuplicates(ListNode* head) {
     ListNode *cur = head;
     while (cur && cur->next) {
         if (cur->val == cur->next->val) {
@@ -102,7 +102,7 @@ ListNode* Solution::deleteDuplicates(ListNode* head) {
     return head;
 }
 
-ListNode* Solution::deleteDuplicates2(ListNode* head) {
+ListNode* ListNodeSolution::deleteDuplicates2(ListNode* head) {
     ListNode *dummy_node = new ListNode();
     dummy_node->next = head;
     ListNode *cur = dummy_node;
@@ -120,7 +120,7 @@ ListNode* Solution::deleteDuplicates2(ListNode* head) {
     return dummy_node->next;
 }
 
-ListNode* Solution::reverse_between(ListNode* a, ListNode* b) {
+ListNode* ListNodeSolution::reverse_between(ListNode* a, ListNode* b) {
     ListNode* prev = new ListNode();
     ListNode* cur = a;
     while (cur != b) {
@@ -131,7 +131,7 @@ ListNode* Solution::reverse_between(ListNode* a, ListNode* b) {
     }
     return prev;
 }
-ListNode* Solution::reverseKGroup(ListNode* head, int k) {
+ListNode* ListNodeSolution::reverseKGroup(ListNode* head, int k) {
     ListNode* a = head;
     ListNode* b = head;
     for(int i=0; i < k; i++) {
@@ -145,7 +145,7 @@ ListNode* Solution::reverseKGroup(ListNode* head, int k) {
     return new_head;
 }
 
-ListNode* Solution::oddEvenList(ListNode* head) {
+ListNode* ListNodeSolution::oddEvenList(ListNode* head) {
     if (!head || !head->next || !head->next->next) {
         return head;
     }
@@ -170,7 +170,7 @@ ListNode* Solution::oddEvenList(ListNode* head) {
     return head;
 }
 
-bool Solution::isPalindrome(ListNode* head) {
+bool ListNodeSolution::isPalindrome(ListNode* head) {
     if (!head || !head->next) {
         return true;
     }
@@ -194,7 +194,7 @@ bool Solution::isPalindrome(ListNode* head) {
     }
 }
 
-Node* Solution::copyRandomList(Node* head) {
+Node* ListNodeSolution::copyRandomList(Node* head) {
     if (!head) {
         return head;
     }
@@ -217,7 +217,7 @@ Node* Solution::copyRandomList(Node* head) {
     return nodeDict[head];
 }
 
-ListNode* Solution::rotateRight(ListNode* head, int k) {
+ListNode* ListNodeSolution::rotateRight(ListNode* head, int k) {
     if (k == 0 || !head) {
         return head;
     }
@@ -238,7 +238,7 @@ ListNode* Solution::rotateRight(ListNode* head, int k) {
     return new_head;
 }
 
-ListNode* Solution::mergeTwoLists(ListNode* list1, ListNode* list2) {
+ListNode* ListNodeSolution::mergeTwoLists(ListNode* list1, ListNode* list2) {
     ListNode *dummy_node = new ListNode();
     ListNode *cur = dummy_node;
     while (list1 && list2) {
@@ -256,7 +256,7 @@ ListNode* Solution::mergeTwoLists(ListNode* list1, ListNode* list2) {
     return dummy_node->next;
 }
 
-ListNode* Solution::sortList(ListNode* head) {
+ListNode* ListNodeSolution::sortList(ListNode* head) {
     if (!head || !head->next) {
         return head;
     }
@@ -272,18 +272,18 @@ ListNode* Solution::sortList(ListNode* head) {
     return mergeTwoLists(sortList(left), sortList(right));
 }
 
-ListNode* Solution::merge_sort(std::vector<ListNode*>& lists, int left, int right) {
+ListNode* ListNodeSolution::merge_sort(std::vector<ListNode*>& lists, int left, int right) {
     if (left == right) {return lists[left];}
     if (left > right) {return NULL;}
     int mid = left + (right - left) / 2;
     return mergeTwoLists(merge_sort(lists, left, mid), merge_sort(lists, mid + 1, right));
 }
 
-ListNode* Solution::mergeKLists(std::vector<ListNode*>& lists) {
+ListNode* ListNodeSolution::mergeKLists(std::vector<ListNode*>& lists) {
     return merge_sort(lists, 0, lists.size() - 1);
 }
 
-bool Solution::hasCycle(ListNode *head) {
+bool ListNodeSolution::hasCycle(ListNode *head) {
     if (!head || !head->next) {return false;}
     ListNode *slow = head;
     ListNode *fast = head;
@@ -297,7 +297,7 @@ bool Solution::hasCycle(ListNode *head) {
     return false;
 }
 
-ListNode* Solution::detectCycle(ListNode *head) {
+ListNode* ListNodeSolution::detectCycle(ListNode *head) {
     if (!head) {return head;}
     ListNode *slow = head;
     ListNode *fast = head;
@@ -322,7 +322,7 @@ ListNode* Solution::detectCycle(ListNode *head) {
     }
 }
 
-ListNode* Solution::getIntersectionNode(ListNode *headA, ListNode *headB) {
+ListNode* ListNodeSolution::getIntersectionNode(ListNode *headA, ListNode *headB) {
     ListNode *l1 = headA;
     ListNode *l2 = headB;
     while (l1 != l2) {
@@ -340,7 +340,7 @@ ListNode* Solution::getIntersectionNode(ListNode *headA, ListNode *headB) {
     return l1;
 }
 
-ListNode* Solution::tailKNode(ListNode *head, int k) {
+ListNode* ListNodeSolution::tailKNode(ListNode *head, int k) {
     ListNode *dummy_node = new ListNode();
     dummy_node->next = head;
     ListNode *fast = head;
@@ -356,7 +356,7 @@ ListNode* Solution::tailKNode(ListNode *head, int k) {
     return slow;
 }
 
-void Solution::reorderList(ListNode* head) {
+void ListNodeSolution::reorderList(ListNode* head) {
     std::vector<ListNode*> vec = {};
     ListNode *cur = head;
     while (cur) {
@@ -374,7 +374,7 @@ void Solution::reorderList(ListNode* head) {
     vec[left]->next = nullptr; // 这个必须加上
 }
 
-ListNode* Solution::addTwoNumbers(ListNode* l1, ListNode* l2) {
+ListNode* ListNodeSolution::addTwoNumbers(ListNode* l1, ListNode* l2) {
     ListNode *dummy_node = new ListNode();
     ListNode *cur = dummy_node;
     int carry = 0;
@@ -400,7 +400,7 @@ ListNode* Solution::addTwoNumbers(ListNode* l1, ListNode* l2) {
     return dummy_node->next;
 }
 
-ListNode* Solution::addTwoNumbers2(ListNode* l1, ListNode* l2) {
+ListNode* ListNodeSolution::addTwoNumbers2(ListNode* l1, ListNode* l2) {
     ListNode *l1_rev = reveseList(l1);
     ListNode *l2_rev = reveseList(l2);
     return reveseList(addTwoNumbers(l1_rev, l2_rev));

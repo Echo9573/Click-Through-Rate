@@ -1,4 +1,55 @@
 class Solution(object):
+
+    
+    def canPartition(self, nums: List[int]) -> bool: # 416. 分割等和子集
+        # dp[w] = 从数组中选择一些元素，放入最多能装元素和为w的背包中，得到的元素和最大为多少。
+        n = len(nums)
+        target = sum(nums) // 2
+        if sum(nums) % 2 != 0:
+            return False
+        W = target
+        dp = [0 for _ in range(W + 1)]
+        for i in range(1, n + 1):
+            for w in range(W, nums[i - 1] - 1, -1):
+                dp[w] = max(dp[w], dp[w - nums[i - 1]] + nums[i - 1])
+        return dp[W] == target
+
+    def findTargetSumWays(self, nums, S):  # 494. 目标和
+        """
+        :type nums: List[int]
+        :type S: int
+        :rtype: int
+        """
+        #原问题可以化成：nums中存在几个子集A，使得A的和为(S + sum(nums))/2
+        # sum(A) = (S + sum(nums))/2
+        # dp[i][j]只使用nums中的前i个数据,想凑出总和j,有dp[i][j]种凑法
+        n = len(nums)
+        if (sum(nums)<S) or ((S + sum(nums))%2==1):
+            return 0
+        amount = (S + sum(nums))/2
+        import numpy as np 
+        dp = np.zeros([n+1, amount+1])
+        for i in range(n+1):
+            dp[i][0] = 1
+
+        for i in range(1, n+1):
+            for j in range(0, amount+1):
+                if (j - nums[i-1]) < 0:
+                    dp[i][j] = dp[i-1][j]
+                else:
+                    dp[i][j] = dp[i-1][j] +  dp[i-1][j-nums[i-1]]
+        return int(dp[-1][-1])
+        
+        # import numpy as np
+        # n = len(nums)
+        # amount = (S + sum(nums))/2
+        # dp = [0] * (amount + 1)
+        # dp[0] = 1
+        # for i in range(0, n):
+        #     for j in range(1, amount+1):
+        #         if j - nums[i]>=0:
+        #             dp[j] = dp[j] + dp[j-nums[i]]
+        # return dp[amount]
     def coinChange(self, amount, coins):  # 零钱兑换：最少硬币数（way1:广度优先搜索，找最短路径）；way2:动态规划O(amount * size)\O(amount)
         # dp[c]:凑成金额c的最少得硬币数量
         dp = [amount + 1 for _ in range(amount + 1)]

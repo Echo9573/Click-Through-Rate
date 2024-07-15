@@ -20,7 +20,7 @@ struct Node {
 
 
 
-class Solution {
+class ListNodeSolution {
 public:
     ListNode* reveseList(ListNode* head);  //翻转链表1
     ListNode* reveseList2(ListNode* head);  //翻转链表1-way2
@@ -47,10 +47,7 @@ public:
     void reorderList(ListNode* head); // 143重排链表
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2); // 2两数相加
     ListNode* addTwoNumbers2(ListNode* l1, ListNode* l2); //445两数相加 II
-
 };
-
-
 
 
 
