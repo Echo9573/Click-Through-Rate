@@ -6,8 +6,8 @@ class Solution:
         carry = 0  # 记录是否进位
         res = []
         while carry > 0 or d1 >= 0 or d2 >= 0:
-            x = int(num1[d1]) if d1 >= 0 else 0
-            y = int(num2[d2]) if d2 >= 0 else 0
+            x = ord(num1[d1]) - ord('0') if d1 >= 0 else 0
+            y = ord(num2[d2]) - ord('0') if d2 >= 0 else 0
             d1 -= 1
             d2 -= 1
             cur_sum = x + y + carry
@@ -30,19 +30,15 @@ class Solution:
         while p1 >= 0 or p2 >= 0:
             x1 = ord(num1[p1]) - ord('0') if p1 >= 0 else 0
             x2 = ord(num2[p2]) - ord('0') if p2 >= 0 else 0
+            p1 -= 1
+            p2 -= 1
             temp_diff = x1 - x2 - borrow
-
             if temp_diff < 0:
                 temp_diff += 10
                 borrow = 1
             else:
                 borrow = 0
-
             res.append(temp_diff)
-            p1 -= 1
-            p2 -= 1
-        print(res)
-
         while len(res) > 1 and res[-1] == 0:
             res.pop()
         return sign + ''.join(str(x) for x in res[::-1])
@@ -57,7 +53,7 @@ class Solution:
                 product = int(num1[i]) * int(num2[j])
                 p1, p2 = i + j, i + j + 1
                 sum = product + res[p2]
-                res[p1] += sum // 10  # 注意这里是+=
+                res[p1] += sum // 10  # 注意这里是+=!!!!
                 res[p2] = sum % 10
         if res[0] == 0:
             res.pop(0)
@@ -130,8 +126,7 @@ class Solution:
             return "IPv6"
         return "Neither"
 
-    def calculate(self, s) : # 基本计算器 II
-        # 带括号的加减
+    def calculate(self, s) : # 计算器I 224——带括号的加减
         ops = [1] # 栈存储操作数用以控制sign这个操作符
         sign = 1
         res = 0 #记录当前的结果
@@ -159,46 +154,42 @@ class Solution:
                 res += num * sign
         return res
 
-    def calculate(self, s):
-        # 不带括号的 加减乘除
-        stack = []
-        index = 0
-        op = "+" # 这里必须初始化为+，要不然第一个字符就不会被加进去。
-        while index < len(s):
-            if s[index] == " ":
-                index += 1
-                continue
-            if s[index].isdigit():
-                num = ord(s[index]) - ord('0')
-                while index + 1 < len(s) and s[index + 1].isdigit():
-                    index += 1
-                    num = num * 10 + ord(s[index]) - ord('0')
-                if op == "+":
-                    stack.append(num)
-                elif op == "-":
-                    stack.append(-num)
-                elif op == "*":
-                    top = stack.pop()
-                    stack.append(top * num)
-                elif op == "/":
-                    top = stack.pop()
-                    stack.append(int(top / num))
-            elif s[index] in "+-*/":
-                op = s[index]
-            index += 1
-        return sum(stack)
-
-    # 带括号的
-    # 计算器V3 ——加减乘除和括号
-    def calculate(self, s):
-        def helper(index):
+    def calculate(self, s) : # 计算器I 224——带括号的加减——方法2：
+        def helper(s):
             stack = []
             op = "+"
             num = 0
-            while index < len(s):
-                if s[index].isdigit():
-                    num = num * 10 + int(s[index])
-                if s[index] in "+-*/" or index == len(s) - 1 or s[index] == ")":
+            while len(s) > 0:
+                c = s.pop(0)
+                if c.isdigit():
+                    num = num * 10 + int(c)
+                if c == "(":
+                    num = helper(s)
+                if (not c.isdigit() and c != ' ') or len(s) == 0:
+                    if op == "+":
+                        stack.append(num)
+                    elif op == "-":
+                        stack.append(-num)
+                    num = 0
+                    op = c
+                if c == ")":
+                    break
+            return sum(stack)
+
+        return helper(list(s))
+
+    def calculate(self, s): # 计算器II 227——不带括号的加减乘除
+        def helper(s):
+            stack = []
+            op = "+"
+            num = 0
+            for i in range(len(s)):
+                c = s[i]
+                if c.isdigit():
+                    num = num * 10 + int(c)
+                if c == "(":
+                    num = helper(s)
+                if (not c.isdigit() and c != ' ') or i == len(s) - 1:
                     if op == "+":
                         stack.append(num)
                     elif op == "-":
@@ -209,17 +200,43 @@ class Solution:
                     elif op == "/":
                         top = stack.pop()
                         stack.append(int(top / num))
-                    op = s[index]
                     num = 0
-                    if s[index] == ")":
-                        break
-                if s[index] == "(":
-                    num, index = helper(index + 1)
-                index += 1
-            return sum(stack), index
+                    op = c
+                if c == ")":
+                    break
+            return sum(stack)
 
-        result, _ = helper(0)
-        return result
+        return helper(list(s))
+    
+    def calculate(self, s):  # 计算器III——772.加减乘除和括号
+        def helper(s):
+            stack = []
+            op = "+"
+            num = 0
+            while len(s) > 0:
+                c = s.pop(0)
+                if c.isdigit():
+                    num = num * 10 + int(c)
+                if c == "(":
+                    num = helper(s)
+                if (not c.isdigit() and c != ' ') or len(s) == 0:
+                    if op == "+":
+                        stack.append(num)
+                    elif op == "-":
+                        stack.append(-num)
+                    elif op == "*":
+                        top = stack.pop()
+                        stack.append(top * num)
+                    elif op == "/":
+                        top = stack.pop()
+                        stack.append(int(top / num))
+                    num = 0
+                    op = c
+                if c == ")":
+                    break
+            return sum(stack)
+
+        return helper(list(s))
 
     def longestCommonPrefix(self, strs):  # 最长公共前缀
         if len(strs) == 0:

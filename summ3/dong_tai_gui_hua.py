@@ -40,16 +40,20 @@ class Solution(object):
                     dp[i][j] = dp[i-1][j] +  dp[i-1][j-nums[i-1]]
         return int(dp[-1][-1])
         
+        # dp[j] 的含义是：使用数组 nums 中的元素，组成和为 j 的方案数
         # import numpy as np
         # n = len(nums)
+        # if (sum(nums) < S) or ((S + sum(nums)) % 2 == 1):
+        #     return 0
         # amount = (S + sum(nums))/2
+        # if amount < 0:
+        #     return 0
         # dp = [0] * (amount + 1)
         # dp[0] = 1
-        # for i in range(0, n):
-        #     for j in range(1, amount+1):
-        #         if j - nums[i]>=0:
-        #             dp[j] = dp[j] + dp[j-nums[i]]
-        # return dp[amount]
+        # for i in range(1, n+1):
+        #     for j in range(amount, nums[i-1] -1, -1):
+        #         dp[j] = dp[j] + dp[j-nums[i-1]]
+        # return dp[-1]
     def coinChange(self, amount, coins):  # 零钱兑换：最少硬币数（way1:广度优先搜索，找最短路径）；way2:动态规划O(amount * size)\O(amount)
         # dp[c]:凑成金额c的最少得硬币数量
         dp = [amount + 1 for _ in range(amount + 1)]

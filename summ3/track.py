@@ -10,76 +10,95 @@ class Solution:
     #         backtrack(路径，选择列表)
     #         撤销选择
     def permute(self, nums):  # 46全排列(nums中没有重复数字)
-        def traceback(path, num):
-            if len(path) == self.n:
+        def trackback1(nums, track):
+            if len(track) == self.n:
                 # 备注，这里如果append track的话，实际上是在self.res中添加了对track的引用，而不是track的副本。
                 # 因此，当你在后面的代码中修改track时，self.res中的所有列表也会被修改。
-                self.res.append(path[:])
-            for i in range(len(num)):
-                # if nums[i] in track:
-                #     continue
-                traceback(path + [num[i]], num[:i] + num[i + 1:])
-        self.res = []
-        self.n = len(nums)
-        traceback([], nums)
+                self.res.append(track[:])
+            for i in range(len(nums)):
+                if nums[i] in track:
+                    continue
+                track.append(nums[i])
+                trackback1(nums, track)
+                track.pop()
+
+        self.res = []  # 这个是贯穿的变量，所以需要是类的成员变量
+        self.n = len(nums)  # 用来记录最后的终止条件
+        track = []  # 这个是中间变量，可能有更改，所以是临时变量
+        trackback1(nums, track)
         return self.res
-    
 
 
     def permuteUnique(self, nums):  # 47全排列2(nums中可能存在重复数字), 返回所有不重复的全排列，时间复杂度O(n*n!)
-        def traceback(path, num):
-            if len(path) == self.n:
-                self.res.append(path[:])
-            for i in range(len(num)):
-                if i > 0 and num[i] == num[i - 1]:
+        def trackback1(nums, track):
+            if len(track) == self.n:
+                self.res.append(track[:])
+                return
+            for i in range(len(nums)):
+                # 如果当前元素和前一个元素相同，跳过当前元素
+                if i > 0 and nums[i] == nums[i - 1]:
                     continue
-                traceback(path + [num[i]], num[:i] + num[i + 1:])
-        self.res = []
-        nums.sort()
-        self.n = len(nums)
-        traceback([], nums)
+                track.append(nums[i])
+                trackback1(nums[:i] + nums[i + 1:], track)
+                track.pop()
+
+        nums.sort()  # 先对 nums 进行排序
+        self.res = []  # 这个是贯穿的变量，所以需要是类的成员变量
+        self.n = len(nums)  # 用来记录最后的终止条件
+        track = []  # 这个是中间变量，可能有更改，所以是临时变量
+        trackback1(nums, track)
         return self.res
 
 
     def subsets(self, nums):  # 返回数组中素有可能的子集
-        def traceback(path, startindex):
-            self.res.append(path[:])
-            for i in range(startindex, self.n):
-                traceback(path + [nums[i]], i + 1)
-        self.res = []
-        self.n = len(nums)
-        traceback([], 0)
+        def trackback(nums, start, track):
+            self.res.append(track[:])
+            for i in range(start, len(nums)):
+                track.append(nums[i])
+                trackback(nums, i + 1, track)
+                track.pop()
+
+        self.res = []  # 这个是贯穿的变量，所以需要是类的成员变量
+        track = []  # 这个是中间变量，可能有更改，所以是临时变量
+        trackback(nums, 0, track)
         return self.res
 
 
     def combinationSum(self, candidates, target):  # 组合总和，候选集中，所有和为target的组合（候选集中的数字可以重复获取）
-        def traceback(total, path, startindex):
+        def traceback(total, startindex, path):
             if total > target:
                 return
             if total == target:
                 self.res.append(path[:])
+                return
             for i in range(startindex, len(candidates)):
-                traceback(total + candidates[i], path + [candidates[i]], i)
+                traceback(total + candidates[i], i, path + [candidates[i]])
 
         self.res = []
-        traceback(0, [], 0)
+        # candidates.sort() # 对候选集进行排序
+        # total记录当前已经选的元素的和（路径），path记录当前选择的元素，选择列表是所有candidates中的元素
+        traceback(0, 0, [])
         return self.res
 
 
     def combinationSum2(self, candidates, target):  # 组合总和，候选集中，所有和为target的组合（候选集中的数字一次组合只能用一次）
-        def traceback(total, path, startindex):
+        def traceback(total, startindex, path):
             if total > target:
                 return
             if total == target:
                 self.res.append(path[:])
-            for i in range(startindex, len(candidates)):
+                return
+            for i in range(startindex, len(candidates)):  # 防止重合
+                # 增加去重逻辑
                 if i > startindex and candidates[i] == candidates[i - 1]:
                     continue
-                traceback(total + candidates[i], path + [candidates[i]], i + 1)
+                # 注意下一个因为不能重复，所以要从i+1开始
+                traceback(total + candidates[i], i + 1, path + [candidates[i]])
 
         self.res = []
-        candidates.sort()
-        traceback(0, [], 0)
+        candidates.sort()  # 对候选集进行排序
+        # total记录当前已经选的元素的和（路径），path记录当前选择的元素，选择列表是所有candidates中的元素
+        traceback(0, 0, [])
         return self.res
 
 
