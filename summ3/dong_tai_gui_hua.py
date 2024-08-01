@@ -565,7 +565,7 @@ class Solution(object):
                     dp[i][j] = dp[i - 1][j] or dp[i][j - 1]
         return dp[-1][-1]
 
-    def checkValidString(self, s: str) -> bool:
+    def checkValidString(self, s: str) -> bool:  # 有效的括号字符串，用的贪心算法
         minCount, maxCount = 0, 0
         n = len(s)
         for i in range(n):
