@@ -565,8 +565,23 @@ class Solution(object):
                     dp[i][j] = dp[i - 1][j] or dp[i][j - 1]
         return dp[-1][-1]
 
-    def checkValidString(self, s: str) -> bool:  # 有效的括号字符串
-        return
+    def checkValidString(self, s: str) -> bool:  # 有效的括号字符串，用的贪心算法
+        minCount, maxCount = 0, 0
+        n = len(s)
+        for i in range(n):
+            c = s[i]
+            if c == "(":
+                minCount += 1
+                maxCount += 1
+            elif c == ")":
+                minCount = max(minCount - 1, 0)
+                maxCount -= 1
+                if maxCount < 0:
+                    return False
+            else:
+                minCount = max(minCount - 1, 0)
+                maxCount += 1
+        return minCount == 0
     
     def wordBreak(self, s, wordDict):  # 139. 单词拆分
         """

@@ -187,8 +187,6 @@ class Solution:
                 c = s[i]
                 if c.isdigit():
                     num = num * 10 + int(c)
-                if c == "(":
-                    num = helper(s)
                 if (not c.isdigit() and c != ' ') or i == len(s) - 1:
                     if op == "+":
                         stack.append(num)
@@ -202,8 +200,6 @@ class Solution:
                         stack.append(int(top / num))
                     num = 0
                     op = c
-                if c == ")":
-                    break
             return sum(stack)
 
         return helper(list(s))
