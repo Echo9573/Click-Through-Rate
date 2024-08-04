@@ -2,7 +2,7 @@ class Solution(object):
 
     
     def canPartition(self, nums: List[int]) -> bool: # 416. 分割等和子集
-        # dp[w] = 从数组中选择一些元素，放入最多能装元素和为w的背包中，得到的元素和最大为多少。
+        # dp[w] = 从数组中选择一些元素，放入最多容量为w的背包中，元素的最大价值为多少。
         n = len(nums)
         target = sum(nums) // 2
         if sum(nums) % 2 != 0:

@@ -110,6 +110,7 @@ class Solution:
         :type chars: List[str]
         :rtype: int
         """
+        # 有三个指针，分别标记，当前写的位置，当前读的新字符的起点，读指针
         write, start, read = 0, 0, 0
         n = len(chars)
         for read in range(n):
@@ -142,3 +143,26 @@ class Solution:
         return res
 
 
+import heapq
+class MedianFinder(object): # 数据流的中位数
+# 使用一个大顶堆 queMax 记录大于中位数的数，使用一个小顶堆 queMin 小于中位数的数。
+    def __init__(self):
+        self.maxq = []
+        self.minq = []
+
+    def addNum(self, num: int) -> None:
+        if (not self.minq) or (num < -self.minq[0]):
+            heapq.heappush(self.minq, -num)
+        else:
+            heapq.heappush(self.maxq, num)
+        if len(self.minq) - len(self.maxq) > 1:
+            heapq.heappush(self.maxq, -heapq.heappop(self.minq))
+        elif len(self.maxq) - len(self.minq) > 1:
+            heapq.heappush(self.minq, -heapq.heappop(self.maxq))
+
+    def findMedian(self) -> float:
+        if len(self.minq) > len(self.maxq):
+            return -self.minq[0]
+        elif len(self.minq) < len(self.maxq):
+            return self.maxq[0]
+        return (-self.minq[0] + self.maxq[0]) / 2
