@@ -24,7 +24,7 @@ class Solution(object):
         # sum(A) = (S + sum(nums))/2
         # dp[i][j]只使用nums中的前i个数据,想凑出总和j,有dp[i][j]种凑法
         n = len(nums)
-        if (sum(nums)<S) or ((S + sum(nums))%2==1):
+        if (sum(nums)<S) or(sum(nums)<-S) or ((S + sum(nums))%2==1):
             return 0
         amount = (S + sum(nums))/2
         import numpy as np 
@@ -57,11 +57,11 @@ class Solution(object):
     def coinChange(self, amount, coins):  # 零钱兑换：最少硬币数（way1:广度优先搜索，找最短路径）；way2:动态规划O(amount * size)\O(amount)
         # dp[i]:凑成金额i的最少得硬币数量
         # way1:先遍历钱币，再遍历金额：
-        # dp = [0] + [float('inf')] * amount
-        # for coin in coins:
-        #     for i in range(coin, amount + 1):
-        #         dp[i] = min(dp[i], dp[i - coin] + 1)
-        # return dp[-1] if dp[-1] != float('inf') else -1
+        dp = [0] + [float('inf')] * amount
+        for coin in coins:
+            for i in range(coin, amount + 1):
+                dp[i] = min(dp[i], dp[i - coin] + 1)
+        return dp[-1] if dp[-1] != float('inf') else -1
 
         # way2:先遍历金额，再遍历钱币：
         # dp = [0] + [float('inf')] * amount
@@ -71,16 +71,16 @@ class Solution(object):
         #             dp[i] = min(dp[i], dp[i - coin] + 1)
         # return dp[-1] if dp[-1] != float('inf') else -1
 
-        # way3:二维数组：使用前i种钱币，凑金额j的最少钱币数
-        dp = [[float('inf')] * (amount + 1) for _ in range(len(coins) + 1)]
-        for i in range(len(coins) + 1):
-            dp[i][0] = 0
-        for i in range(1, len(coins) + 1):
-            for j in range(1, amount + 1):
-                dp[i][j] = dp[i - 1][j]
-                if j - coins[i - 1] >= 0:
-                    dp[i][j] = min(dp[i][j], dp[i][j - coins[i - 1]] + 1)
-        return dp[-1][-1] if dp[-1][-1] != float('inf') else -1
+        # # way3:二维数组：使用前i种钱币，凑金额j的最少钱币数
+        # dp = [[float('inf')] * (amount + 1) for _ in range(len(coins) + 1)]
+        # for i in range(len(coins) + 1):
+        #     dp[i][0] = 0
+        # for i in range(1, len(coins) + 1):
+        #     for j in range(1, amount + 1):
+        #         dp[i][j] = dp[i - 1][j]
+        #         if j - coins[i - 1] >= 0:
+        #             dp[i][j] = min(dp[i][j], dp[i][j - coins[i - 1]] + 1)
+        # return dp[-1][-1] if dp[-1][-1] != float('inf') else -1
 
 
     def num_coinChange(self, amount, coins):  # 零钱兑换2总兑换方案数:动态规划 O(amount * size)\O(amount)
