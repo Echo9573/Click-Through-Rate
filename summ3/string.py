@@ -205,33 +205,30 @@ class Solution:
         return helper(list(s))
     
     def calculate(self, s):  # 计算器III——772.加减乘除和括号
-        def helper(s):
+        def helper(lists):
             stack = []
-            op = "+"
             num = 0
-            while len(s) > 0:
-                c = s.pop(0)
+            op = "+"
+            while len(lists) > 0:
+                c = lists.pop(0)
                 if c.isdigit():
-                    num = num * 10 + int(c)
+                    num = num * 10 + ord(c) - ord('0')
                 if c == "(":
-                    num = helper(s)
-                if (not c.isdigit() and c != ' ') or len(s) == 0:
+                    num = helper(lists)
+                if (not c.isdigit() and c != " ") or len(lists) == 0:
                     if op == "+":
                         stack.append(num)
-                    elif op == "-":
+                    elif op == '-':
                         stack.append(-num)
                     elif op == "*":
-                        top = stack.pop()
-                        stack.append(top * num)
+                        stack[-1] = stack[-1] * num
                     elif op == "/":
-                        top = stack.pop()
-                        stack.append(int(top / num))
-                    num = 0
+                        stack[-1] = int(stack[-1] / num)
                     op = c
+                    num = 0
                 if c == ")":
                     break
             return sum(stack)
-
         return helper(list(s))
 
     def longestCommonPrefix(self, strs):  # 最长公共前缀
