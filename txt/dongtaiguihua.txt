@@ -40,7 +40,7 @@ class Solution(object):
                     dp[i][j] = dp[i-1][j] +  dp[i-1][j-nums[i-1]]
         return int(dp[-1][-1])
         
-        # dp[j] 的含义是：使用数组 nums 中的元素，组成和为 j 的方案数
+        # dp[j] 的含义是：使用数组 nums 中的元素，组成和为 j 的方案数 # 注意：本题和零钱兑换2非常相近
         # import numpy as np
         # n = len(nums)
         # if (sum(nums) < S) or ((S + sum(nums)) % 2 == 1):
@@ -55,27 +55,55 @@ class Solution(object):
         #         dp[j] = dp[j] + dp[j-nums[i-1]]
         # return dp[-1]
     def coinChange(self, amount, coins):  # 零钱兑换：最少硬币数（way1:广度优先搜索，找最短路径）；way2:动态规划O(amount * size)\O(amount)
-        # dp[c]:凑成金额c的最少得硬币数量
-        dp = [amount + 1 for _ in range(amount + 1)]
-        dp[0] = 0
-        for i in range(1, amount + 1):
-            for coin in coins:
-                if i < coin:
-                    continue
-                dp[i] = min(dp[i], dp[i - coin] + 1)
-        if dp[-1] != amount + 1:
-            return dp[-1]
-        else:
-            return -1
+        # dp[i]:凑成金额i的最少得硬币数量
+        # way1:先遍历钱币，再遍历金额：
+        # dp = [0] + [float('inf')] * amount
+        # for coin in coins:
+        #     for i in range(coin, amount + 1):
+        #         dp[i] = min(dp[i], dp[i - coin] + 1)
+        # return dp[-1] if dp[-1] != float('inf') else -1
+
+        # way2:先遍历金额，再遍历钱币：
+        # dp = [0] + [float('inf')] * amount
+        # for i in range(1, amount + 1):
+        #     for coin in coins:
+        #         if i >= coin:
+        #             dp[i] = min(dp[i], dp[i - coin] + 1)
+        # return dp[-1] if dp[-1] != float('inf') else -1
+
+        # way3:二维数组：使用前i种钱币，凑金额j的最少钱币数
+        dp = [[float('inf')] * (amount + 1) for _ in range(len(coins) + 1)]
+        for i in range(len(coins) + 1):
+            dp[i][0] = 0
+        for i in range(1, len(coins) + 1):
+            for j in range(1, amount + 1):
+                dp[i][j] = dp[i - 1][j]
+                if j - coins[i - 1] >= 0:
+                    dp[i][j] = min(dp[i][j], dp[i][j - coins[i - 1]] + 1)
+        return dp[-1][-1] if dp[-1][-1] != float('inf') else -1
+
 
     def num_coinChange(self, amount, coins):  # 零钱兑换2总兑换方案数:动态规划 O(amount * size)\O(amount)
-        # dp[c]:凑成金额c的方案总数
-        dp = [0 for _ in range(amount + 1)]
-        dp[0] = 1
-        for coin in coins:  # 要不要用当前的硬币
-            for i in range(coin, amount + 1):
-                dp[i] += dp[i - coin]
-        return dp[amount]
+        # 本题【必须】应该先遍历物品再遍历背包，如果相反的话，则是排列数
+        # 总体思想：先物品后背包
+        # dp[i]：凑金额i的方案数 dp[i] = dp[i] + dp[i - coin]
+        # dp = [0] * (amount + 1)
+        # dp[0] = 1
+        # for coin in coins:
+        #     for i in range(coin, amount + 1):
+        #         dp[i] = dp[i] + dp[i - coin]
+        # return dp[-1]
+
+        # dp[i][j]：使用前i种钱币，凑金额j的方案数。
+        dp = [[0 for _ in range(amount + 1)] for _ in range(len(coins) + 1)]
+        for i in range(len(coins) + 1):
+            dp[i][0] = 1
+        for i in range(1, len(coins) + 1):
+            for j in range(1, amount + 1):
+                dp[i][j] = dp[i - 1][j] # 不使用当前硬币
+                if j - coins[i - 1] >= 0: # 使用当前硬币
+                    dp[i][j] += dp[i][j - coins[i - 1]]
+        return dp[-1][-1]
 
     def climbStairs(self, n): # 方案数
         dp = [0] * (n + 1)
@@ -518,7 +546,7 @@ class Solution(object):
                 dp[i] += dp[i - 2]
         return dp[-1]
     
-    def isMatch(self, s, p):  # 10. 正则表达式匹配（.and*)
+    def isMatch(self, s, p):  # 10. 正则表达式匹配（.and*）
         """
         :type s: str
         :type p: str
@@ -536,7 +564,7 @@ class Solution(object):
                     dp[i][j] = dp[i - 1][j - 1]
                 elif p[j - 1] == "*":
                     if p[j - 2] != "." and s[i - 1] != p[j - 2]:
-                        dp[i][j] = dp[i][j - 2] # 
+                        dp[i][j] = dp[i][j - 2]
                     else:
                         dp[i][j] = dp[i][j - 1] or dp[i][j - 2] or dp[i - 1][j]
         return dp[-1][-1]
@@ -565,7 +593,7 @@ class Solution(object):
                     dp[i][j] = dp[i - 1][j] or dp[i][j - 1]
         return dp[-1][-1]
 
-    def checkValidString(self, s: str) -> bool:  # 有效的括号字符串，用的贪心算法
+    def checkValidString(self, s: str) -> bool:  # 678 有效的括号字符串，用的贪心算法
         minCount, maxCount = 0, 0
         n = len(s)
         for i in range(n):
