@@ -142,6 +142,26 @@ class Solution:
                      right -= 1
          return res
 
+    def compress(self, chars):  # 443压缩字符串方法2
+        """
+        :type chars: List[str]
+        :rtype: int
+        """
+        write, start, read = 0, 0, 0
+        n = len(chars)
+        for read in range(n):
+            if read == n - 1 or chars[read] != chars[read + 1]:
+                chars[write] = chars[read]
+                write += 1
+                ls = read - start + 1
+                if ls > 1:
+                    numstr = list(str(ls))
+                    for i in numstr:
+                        chars[write] = i
+                        write += 1
+                start = read + 1
+        return write
+
     def reverse(self, chars, left, right):  # 必须增加这个翻转函数
         if left <= right:
             chars[left], chars[right] = chars[right], chars[left]

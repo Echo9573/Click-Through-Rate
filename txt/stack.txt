@@ -105,6 +105,27 @@ class Solution:
                 res += ch
         return res
 
+    def compress(self, chars):  # 443压缩字符串方法2
+        """
+        :type chars: List[str]
+        :rtype: int
+        """
+        # 有三个指针，分别标记，当前写的位置，当前读的新字符的起点，读指针
+        write, start, read = 0, 0, 0
+        n = len(chars)
+        for read in range(n):
+            if read == n - 1 or chars[read] != chars[read + 1]:
+                chars[write] = chars[read]
+                write += 1
+                ls = read - start + 1
+                if ls > 1:
+                    numstr = list(str(ls))
+                    for i in numstr:
+                        chars[write] = i
+                        write += 1
+                start = read + 1
+        return write
+
     def longestValidParentheses(self, s: str) -> int:  # 最长有效括号
         # 方法一：栈
         # way1: 栈
@@ -122,3 +143,26 @@ class Solution:
         return res
 
 
+import heapq
+class MedianFinder(object): # 数据流的中位数
+# 使用一个大顶堆 queMax 记录大于中位数的数，使用一个小顶堆 queMin 小于中位数的数。
+    def __init__(self):
+        self.maxq = []
+        self.minq = []
+
+    def addNum(self, num: int) -> None:
+        if (not self.minq) or (num < -self.minq[0]):
+            heapq.heappush(self.minq, -num)
+        else:
+            heapq.heappush(self.maxq, num)
+        if len(self.minq) - len(self.maxq) > 1:
+            heapq.heappush(self.maxq, -heapq.heappop(self.minq))
+        elif len(self.maxq) - len(self.minq) > 1:
+            heapq.heappush(self.minq, -heapq.heappop(self.maxq))
+
+    def findMedian(self) -> float:
+        if len(self.minq) > len(self.maxq):
+            return -self.minq[0]
+        elif len(self.minq) < len(self.maxq):
+            return self.maxq[0]
+        return (-self.minq[0] + self.maxq[0]) / 2

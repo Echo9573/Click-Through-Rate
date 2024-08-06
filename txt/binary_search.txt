@@ -196,18 +196,6 @@ class Solution:
         # 此时right指向的是小于x的最大平方数的整数平方根
         return right
 
-    def mySqrt(self, x):  # 69x的平方根
-        left, right = 0, x
-        res = 0
-        while left <= right:
-            mid = (left + right) // 2
-            if mid * mid < x:
-                left = mid + 1
-            elif mid * mid > x:
-                right = mid - 1
-            else:
-                return mid
-
     def myPow(self, x, n):  # 50pow(x, n)
         # 递归
         def helper(n):
