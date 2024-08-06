@@ -129,7 +129,7 @@ class Solution:
         return area
 
 
-     def triangleNumber(self, nums):  # 有效三角形的个数
+    def triangleNumber(self, nums):  # 有效三角形的个数
          nums.sort()
          res = 0
          for i in range(2, len(nums)):
