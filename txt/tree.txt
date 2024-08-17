@@ -313,7 +313,7 @@ class Solution(object):
     def post_serialize(self, root):
         if not root:
             return "NULL"
-        return str(root.val) + ',' + str(self.post_serialize(root.left)) + ',' + str(self.post_serialize(root.right))
+        return str(self.post_serialize(root.left)) + ',' + str(self.post_serialize(root.right)) + str(root.val)
     def post_deserialze(self, data):
         def helper(datalist):
             val = datalist.pop()
