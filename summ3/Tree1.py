@@ -101,6 +101,7 @@ class Solution(object):
         return res
 
     def isCompleteTree(self, root):  # 二叉树的完全性检验
+        # 完全二叉树中，除了最后一层外，所有层都被完全填满
         # 层序遍历
         if not root:
             return False
