@@ -669,7 +669,6 @@ class TreeNodeSolution:
             cur = cur.right
         cur.right = temp_right
         return root
-    
     # def isValidBST(self, root): # 28 98. 验证二叉搜索树
     # def verifyTreeOrder(self, postorder): # 29  
     # def deleteNode(self, root, key): # 30 450.删除二叉搜索树中的节点
