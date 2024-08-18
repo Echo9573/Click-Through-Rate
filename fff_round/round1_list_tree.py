@@ -384,7 +384,7 @@ class TreeNodeSolution:
     # def postorderDeserialize(self, root): # 26 297.二叉树的序列化与反序列化-后序
     # def flatten(self, root): # 27 114. 二叉树展开为链表
     # def isValidBST(self, root): # 28 98. 验证二叉搜索树
-    # def verifyTreeOrder(self, postorder): # 29  
+    # def verifyTreeOrder(self, postorder): # 29  LCR 152.验证二叉搜索树的后序遍历序列
     # def deleteNode(self, root, key): # 30 450.删除二叉搜索树中的节点
     # def findLargetstKNode(self, root, k): # 31  二叉搜索树中第K大的元素
     # def findSmallestKNode(self, root, k): # 32 230.二叉搜索树中第K小的元素
@@ -559,7 +559,7 @@ class TreeNodeSolution:
                 return 0
             left_sum = max(0, dfs(root.left))
             right_sum = max(0, dfs(root.right))
-            self.max_sum(left_sum + right_sum + root.val, self.max_sum)
+            self.max_sum = max(left_sum + right_sum + root.val, self.max_sum)
             return max(left_sum, right_sum) + root.val
         self.max_sum = 0
     def hasPathSum(self, root, targetSum): # 16 
@@ -665,14 +665,184 @@ class TreeNodeSolution:
         root.right = root.left
         root.left = None
         cur = root.right
-        while cur.right:
-            cur = cur.right
-        cur.right = temp_right
+        if cur:
+            while cur.right:
+                cur = cur.right
+            cur.right = temp_right
+        else:
+            root.right = temp_right
         return root
-    # def isValidBST(self, root): # 28 98. 验证二叉搜索树
-    # def verifyTreeOrder(self, postorder): # 29  
-    # def deleteNode(self, root, key): # 30 450.删除二叉搜索树中的节点
-    # def findLargetstKNode(self, root, k): # 31  二叉搜索树中第K大的元素
-    # def findSmallestKNode(self, root, k): # 32 230.二叉搜索树中第K小的元素
-
-  
+    def isValidBST(self, root): # 28 98. 验证二叉搜索树
+        def dfs(root, minv, maxv):
+            if not root:
+                return True
+            if minv < root.val < maxv:
+                return dfs(root.left, minv, root.val) and dfs(root.right, root.val, maxv)
+            return False
+        return dfs(root, float('-inf'), float('inf'))
+    def verifyTreeOrder(self, postorder): # 29  LCR 152. 验证二叉搜索树的后序遍历序列
+        def dfs(left, right):
+            if left >= right:
+                return True
+            index = left
+            while postorder[index] < postorder[right]:
+                index += 1
+            mid = index
+            while postorder[index] > postorder[right]:
+                index += 1
+            return index == right and dfs(left, mid - 1) and dfs(mid, right - 1)
+        if len(postorder) <= 2:
+            return True
+        return dfs(0, len(postorder) - 1)
+    def deleteNode(self, root, key): # 30 450.删除二叉搜索树中的节点
+        if not root:
+            return None
+        if root.val < key:
+            root.right =  self.deleteNode(root.right, key)
+        elif root.val > key:
+            root.left = self.deleteNode(root.left, key)
+        else:
+            if not root.left:
+                return root.right
+            elif not root.right:
+                return root.left
+            else:
+                cur = root.right
+                while cur.left:
+                    cur = cur.left
+                root.val = cur.val
+                root.right = self.deleteNode(root.right, cur.val)
+        return root
+    def findLargetstKNode(self, root, k): # 31  二叉搜索树中第K大的元素
+        def dfs(root):
+            if not root:
+                return None
+            dfs(root.right)
+            self.k -= 1
+            if self.k == 0:
+                self.res = root.val
+                return
+            dfs(root.left)
+            return 
+        self.res = 0
+        self.k = k
+        dfs(root)
+        return self.res
+    def findSmallestKNode(self, root, k): # 32 230.二叉搜索树中第K小的元素
+        def dfs(root):
+            if not root:
+                return None
+            dfs(root.left)
+            self.k -= 1
+            if self.k == 0:
+                self.res = root.val
+                return
+            dfs(root.right)
+            return
+        self.res = 0
+        self.k = k
+        dfs(root)
+        return self.res
+    def longestIncreasingPath(self, matrix): # 33 0329.矩阵中的最长递增路径
+        def dfs(row, col):
+            if cache[row][col] != 0:
+                return cache[row][col]
+            direct = [(0, 1), (0, -1), (-1, 0), (1, 0)]
+            cur_len = 1
+            for i in direct:
+                new_row, new_col = row + i[0], col + i[1]
+                if 0 <= new_row < len(matrix) and 0 <= new_col < len(matrix[0]) and matrix[new_row][new_col] > matrix[row][col]
+                    cur_len = max(dfs(new_row, new_col) + 1, cur_len)
+            return cur_len
+        cache = [[0 for _ in range(matrix[0])] for _ in range(len(matrix))]
+        max_res = 0
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0]))
+                max_res = max(max_res, dfs(i, j))
+        return max_res
+    def numIslands(self, grid): # 34 200.岛屿数量
+        def dfs(row, col):
+            if row < 0 or row >= len(grid) or col < 0 or col >= len(grid[0]) or grid[row][col] == "0":
+                return
+            grid[row][col] = "0"
+            directs = [(0, 1), (0, -1), (-1, 0), (1, 0)]
+            for i in directs:
+                new_row, new_col = row + i[0], col + i[1]
+                dfs(new_row, new_col)
+        counts = 0
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == "1":
+                    dfs(i, j)
+                    counts += 1
+        return counts
+    def maxAreaOfIsland(self, grid): # 35 695. 岛屿的最大面积
+        def dfs(row, col):
+            if row < 0 or col < 0 or row >= len(grid) or col >= len(grid[0]) or grid[row][col] == 0:
+                return 0
+            grid[row][col] = 0
+            cur_count = 1
+            directs = [(0, 1), (0, -1), (-1, 0), (1, 0)]
+            for i in directs:
+                new_row, new_col = row + i[0], col + i[1]
+                cur_count += dfs(new_row, new_col)
+            return cur_count
+        max_res = 0
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == 1:
+                    max_res = max(max_res, dfs(i, j))
+        return max_res
+    def sumNumbers(self, root): # 36 129.求根节点到叶节点数字之和
+        def dfs(total, root):
+            if not root:
+                return 0
+            cur_total = 10 * total + root.val
+            if not root.left and not root.right:
+                return cur_total
+            return dfs(cur_total, root.left) + dfs(cur_total, root.right)
+        return dfs(0, root)
+    def canFinish(self, numCourses, prerequisites): # 37 207.课程表
+        from collections import defaultdict
+        out_dic = defaultdict(list)
+        in_dic = [0 for i in range(numCourses)]
+        for x in prerequisites:
+            out_dic[x[1]].append(x[0])
+            in_dic[x[0]] += 1
+        q = [x for x in range(len(in_dic)) if in_dic[x] == 0]
+        while q:
+            m = q.pop(0)
+            for j in out_dic[m]:
+                in_dic[j] -= 1
+                if in_dic[j] == 0:
+                    q.append(j)
+        if sum(in_dic) == 0:
+            return True
+        return False
+    def canFinish2(self, numCourses, prerequisites): # 38 210.课程表 II
+        from collections import defaultdict
+        out_dic = defaultdict(list)
+        in_dic = [0 for i in range(numCourses)]
+        for x in prerequisites:
+            out_dic[x[1]].append(x[0])
+            in_dic[x[0]] += 1
+        q = [x for x in range(len(in_dic)) if in_dic[x] == 0]
+        res = []
+        while q:
+            m = q.pop(0)
+            res.append(m)
+            for j in out_dic[m]:
+                in_dic[j] -= 1
+                if in_dic[j] == 0:
+                    q.append(j)
+        if sum(in_dic) == 0:
+            return res
+        return []
+    def numDifferentBinaryTree(self, n): # 39 0096.不同的二叉搜索树
+        # dp[i]:i个节点能构成的二叉搜索树的数量 = 求和 dp[j - 1] * dp[i - j]
+        dp = [0] * (n + 1)
+        dp[0] = 1
+        for i in range(1, n + 1):
+            for j in range(1, i + 1):
+                dp[i] += dp[j - 1] * dp[i - j]
+        return dp[n]
