@@ -1,0 +1,83 @@
+ListNode:
+# def swapPairs(self, head): # 1
+# def deleteDuplicates(self, head): # 2
+# def deleteDuplicates2(self, head): # 3
+# def reverseList(self, head): # 4
+# def reverseDoubleList(self, head): # 5
+# def reverseListBetween(self, a, b): # 6
+# def reverseKgroup(self, head, k): # 7
+# def oddEvenList(self, head): # 8
+# def isPalindomeList(self, head): # 9
+# def mergeTwoList(self, list1, list2): # 10
+# def mergeKLists(self, lists): # 11
+# def SortList(self, head): # 12
+# def reOrderList(self, head): # 13
+# def hasCycle(self, head): # 14
+# def detectCycle(self, head): # 15
+# def getInterSectNode(self, list1, list2): # 16
+# def tailKNode(self, head, k): # 17
+# def removeKthFromEnd(self, head, k): # 18
+# def copyRandomList(self, head): # 19
+# def addTowNum(self, head): # 20
+# def rotateList(self, head, k): # 21
+
+TreeNode:
+# def preorderTravel(self, root): # 1 前序遍历
+# def inorderTravel(self, root): # 2 中序遍历
+# def postorderTravel(self, root): # 3 后序遍历
+# def levelTravel(self, root): # 4 层序遍历
+# def zigzagTravel(self, root): # 5 zigzag遍历
+# def widthofTree(self, root): # 6 树的宽度
+# def rightSideTree(self, root): # 7 二叉树的右视图
+# def isCompleteTree(self, root): # 8 二叉树完整性检验
+# def buildInPreTree(self, inorder, preorder): # 9 从前序和中序遍历结果构建二叉树
+# def buildInPostTree(self, inorder, postorder): # 10 从后序和中序遍历结果构建二叉树
+# def maxDepth(self, root): # 11 最大深度
+# def minDepth(self, root): # 12 最小深度
+# def isBalance(self, root): # 13 是否是平衡树
+# def diameterTree(self, root): # 14 二叉树最大直径
+# def maxPathSum(self, root): # 15 根节点到叶子节点最大路径和
+# def hasPathSum(self, root, targetSum): # 16 112.路径总和
+# def pathSum(self, root, targetSum): # 17 113.路径总和 II
+# def lowestCommenAncestor(self, root, p, q):  # 18 236.二叉树的最近公共祖先
+# def inverTree(self, root): # 19 226.翻转二叉树
+# def isduicheng(self, root): # 20 101.对称二叉树
+# def isSameTree(self, p, q):  # 21 100.相同的树
+# def isSubTree(self, root, subroot): # 22 572.另一棵树的子树
+# def preorderSerialize(self, root): # 23  297.二叉树的序列化与反序列化-前序
+# def preorderDeserialize(self, root): # 24 297.二叉树的序列化与反序列化-前序
+# def postorderSerialize(self, root): # 25 297.二叉树的序列化与反序列化-后序
+# def postorderDeserialize(self, root): # 26 297.二叉树的序列化与反序列化-后序
+# def flatten(self, root): # 27 114. 二叉树展开为链表
+# def isValidBST(self, root): # 28 98. 验证二叉搜索树
+# def verifyTreeOrder(self, postorder): # 29  LCR 152.验证二叉搜索树的后序遍历序列
+# def deleteNode(self, root, key): # 30 450.删除二叉搜索树中的节点
+# def findLargetstKNode(self, root, k): # 31  二叉搜索树中第K大的元素
+# def findSmallestKNode(self, root, k): # 32 230.二叉搜索树中第K小的元素
+# def longestIncreasingPath(self, matrix): # 33 0329.矩阵中的最长递增路径
+# def numIslands(self, grid): # 34 200.岛屿数量
+# def maxAreaOfIsland(self, grid): # 35 lcr105岛屿最大面积
+# def sumNumbers(self, root): # 36 129.求根节点到叶节点数字之和
+# def canFinish(self, numCourse, prepre): # 37 207.课程表
+# def canFinish2(self, numCourse, prepre): # 38 210.课程表 II
+# def numDifferentBinaryTree(self, n): # 39 0096.不同的二叉搜索树
+
+Window:
+# 560. 和为 K 的子数组**
+# 209.长度最小的子数组**
+# 862.和至少为 K 的最短子数组***
+# 239. 滑动窗口最大值
+# 3.无重复字符的最长子串长度**
+# 76.最小覆盖子串***
+# 1004.最大连续1的个数 III**
+
+Track:
+# 47. 全排列 II
+# 37. 解数独
+# 22. 括号生成
+# 78. 子集
+# 39. 组合总和
+# 40. 组合总和 II
+# 93. 复原 IP 地址
+# 79. 单词搜索
+

@@ -1,4 +1,26 @@
 class Window:
+    # 560. 和为 K 的子数组
+    # 209.长度最小的子数组**
+    # 862.和至少为 K 的最短子数组***
+    # 239. 滑动窗口最大值
+    # 3.无重复字符的最长子串长度**
+    # 76.最小覆盖子串***
+    # 1004.最大连续1的个数 III**
+
+    # 560. 和为 K 的子数组**
+    # 时间复杂度：O(n)，空间复杂度：O(n)
+    def numofsumK(self, num, k):
+        # mp键是和，值是次数
+        mp = {0: 1}
+        presum = 0
+        cnt = 0
+        for i in range(len(num)):
+            presum = presum + num[i]
+            if presum - k in mp:
+                cnt += mp[presum - k]
+            mp[presum] = mp.get(presum, 0) + 1
+        return cnt
+
     # 209.长度最小的子数组**
     # 时间复杂度：O(n)，空间复杂度：O(1)
     def minAarrayLen(self, target, num):

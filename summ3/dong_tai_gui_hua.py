@@ -206,7 +206,7 @@ class Solution(object):
         # 因为有冷冻期，每次买入持有时，减去fee
         dp = [[0] * 2 for _ in range(len(prices) + 1)]
         for i in range(len(prices) + 1):
-            if i == 0:
+            if i == 0 or i == 1:
                 dp[i][1] = -prices[0] - fee
             else:
                 dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i - 1] )
