@@ -185,7 +185,23 @@ class Solution(object):
                 else:
                     dp[i][k][0] = max(dp[i - 1][k][0], dp[i - 1][k][1] + prices[i - 1])
                     dp[i][k][1] = max(dp[i - 1][k][1], dp[i - 1][k - 1][0] - prices[i - 1])
-        return dp[-1][-1][0]
+        # Find the operation path
+        op_path = []
+        i, k = n, K
+        holding = False
+        while i > 0 and k > 0:
+            if not holding:
+                if dp[i][k][0] == dp[i - 1][k][1] + nums[i - 1]:
+                    op_path.append((i - 1, "sell"))
+                    holding = True
+            else:
+                if dp[i][k][1] == dp[i - 1][k - 1][0] - nums[i - 1]:
+                    op_path.append((i - 1, "buy"))
+                    k -= 1
+                    holding = False
+            i -= 1
+        op_path.reverse()
+        return dp[-1][-1][0], op_path
 
     def maxProfit4(self, prices, K): # 股票买卖，有冷冻期1天，无限多次买卖，最多同时有1支股票在手
         # dp[i][0]: 第i天，当前手上没有股票的收益, 最终返回dp[N][0]

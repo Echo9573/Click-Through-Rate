@@ -2,7 +2,7 @@ class Solution(object):
 
     
     def canPartition(self, nums: List[int]) -> bool: # 416. 分割等和子集
-        # dp[w] = 从数组中选择一些元素，放入最多能装元素和为w的背包中，得到的元素和最大为多少。
+        # dp[w] = 从数组中选择一些元素，放入最多容量为w的背包中，元素的最大价值为多少。
         n = len(nums)
         target = sum(nums) // 2
         if sum(nums) % 2 != 0:
@@ -185,7 +185,23 @@ class Solution(object):
                 else:
                     dp[i][k][0] = max(dp[i - 1][k][0], dp[i - 1][k][1] + prices[i - 1])
                     dp[i][k][1] = max(dp[i - 1][k][1], dp[i - 1][k - 1][0] - prices[i - 1])
-        return dp[-1][-1][0]
+        # Find the operation path
+        op_path = []
+        i, k = n, K
+        holding = False
+        while i > 0 and k > 0:
+            if not holding:
+                if dp[i][k][0] == dp[i - 1][k][1] + nums[i - 1]:
+                    op_path.append((i - 1, "sell"))
+                    holding = True
+            else:
+                if dp[i][k][1] == dp[i - 1][k - 1][0] - nums[i - 1]:
+                    op_path.append((i - 1, "buy"))
+                    k -= 1
+                    holding = False
+            i -= 1
+        op_path.reverse()
+        return dp[-1][-1][0], op_path
 
     def maxProfit4(self, prices, K): # 股票买卖，有冷冻期1天，无限多次买卖，最多同时有1支股票在手
         # dp[i][0]: 第i天，当前手上没有股票的收益, 最终返回dp[N][0]
@@ -206,7 +222,7 @@ class Solution(object):
         # 因为有冷冻期，每次买入持有时，减去fee
         dp = [[0] * 2 for _ in range(len(prices) + 1)]
         for i in range(len(prices) + 1):
-            if i == 0:
+            if i == 0 or i == 1:
                 dp[i][1] = -prices[0] - fee
             else:
                 dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i - 1] )
